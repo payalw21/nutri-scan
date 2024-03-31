@@ -1,23 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+// import ReactBarcodeScanner from "react-barcode-scanner";
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import Input from "./components/Input";
+// import BarcodeScanner from "./components/BarcodeScanner";
+import ProductDetail from "./components/ProductDetail";
 
 function App() {
+  const [input, setInput] = useState("");
+  const [foodData, setFoodData] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    console.log("Seding HTTPS request....", input);
+    const api = `https://world.openfoodfacts.net/api/v2/product/${input}`;
+
+    async function fetchData() {
+      try {
+        const res = await fetch(api);
+        const data = await res.json();
+        console.log("Data", data);
+        setFoodData(data.product);
+        console.log("Food Data", data.product);
+      } catch (error) {
+        setError(true);
+        console.log("error");
+      } finally {
+        setIsLoading(true);
+      }
+
+      console.log("foodData", foodData);
+    }
+
+    fetchData();
+  }, [input]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <Input setInput={setInput} />
+      <ProductDetail foodData={foodData} />
     </div>
   );
 }

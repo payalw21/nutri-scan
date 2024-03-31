@@ -1,0 +1,27 @@
+nav {
+  background: #aaa0bc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50%;
+  width: 100vw;
+}
+
+nav span {
+  margin-left: 40px;
+  cursor: pointer;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+nav h1 {
+  margin-left: 40px;
+}
+
+.nav-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
